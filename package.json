@@ -6,7 +6,6 @@
   "scripts": {
     "test": "node tests.js"
   },
-  "repository": "https://github.com/zaach/json2jison",
   "keywords": [
     "jison",
     "json",
