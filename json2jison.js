@@ -143,9 +143,9 @@ function genLex (lex) {
 
 function genLexRegex (regex) {
     var matcher = regex.replace(/^([a-zA-Z0-9]+)\\b$/, "\"$1\"")
-                       .replace(/\\([.*+?^${}()|\[\]\/\\])/g,"$1")
-                       .replace(/^\$$/,"<<EOF>>")
-                       .replace(/^([.*+?^${}()|\[\]\/\\\-;=,><!@#%&]+)$/,"\"$1\"");
+                       .replace(/\\([.*+?^${}()|\[\]\/\\])/g, "$1")
+                       .replace(/^\$$/, "<<EOF>>")
+                       .replace(/^([.*+?^${}()|\[\]\/\\\-;=,><!@#%&]+)$/, "\"$1\"");
     return matcher;
 }
 function genLexRule (rule) {
