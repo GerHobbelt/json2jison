@@ -142,7 +142,7 @@ function genLex (lex) {
 }
 
 function genLexRegex (regex) {
-    var matcher = regex.replace(/^([a-zA-Z0-9]+)\\b$/, "\"$1\"")
+    var matcher = regex.replace(/^([a-zA-Z0-9]+)$/, "\"$1\"")
                        .replace(/\\([.*+?^${}()|\[\]\/\\])/g, "$1")
                        .replace(/^\$$/, "<<EOF>>")
                        .replace(/^([.*+?^${}()|\[\]\/\\\-;=,><!@#%&]+)$/, "\"$1\"");
