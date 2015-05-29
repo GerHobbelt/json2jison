@@ -5,6 +5,8 @@
 var fs = require('fs');
 var path = require('path');
 
+// Supported options:
+// - stripActions
 function json2jison (grammar, options) {
     options = options || {};
     var s = "";
