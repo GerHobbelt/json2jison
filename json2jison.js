@@ -21,24 +21,26 @@ function genDecls (grammar, options) {
     var s = "",
         key;
 
-    for (key in grammar) if (grammar.hasOwnProperty(key)) {
-        if (key === 'start') {
-            s += "\n%start "+grammar.start+"\n\n";
-        }
-        else if (key === 'author') {
-            s += "\n/* author: "+grammar.author+" */\n\n";
-        }
-        else if (key === 'comment') {
-            s += "\n/* description: "+grammar.comment+" */\n\n";
-        }
-        else if (key === 'lex') {
-            s += "%lex\n"+genLex(grammar.lex)+"/lex\n\n";
-        }
-        else if (key === 'operators') {
-            for (var i=0; i<grammar.operators.length; i++) {
-                s += "%"+grammar.operators[i][0]+' '+quoteSymbols(grammar.operators[i].slice(1).join(' '))+"\n";
+    for (key in grammar) {
+        if (grammar.hasOwnProperty(key)) {
+            if (key === 'start') {
+                s += "\n%start " + grammar.start + "\n\n";
             }
-            s += "\n";
+            else if (key === 'author') {
+                s += "\n/* author: " + grammar.author + " */\n\n";
+            }
+            else if (key === 'comment') {
+                s += "\n/* description: " + grammar.comment + " */\n\n";
+            }
+            else if (key === 'lex') {
+                s += "%lex\n" + genLex(grammar.lex) + "/lex\n\n";
+            }
+            else if (key === 'operators') {
+                for (var i = 0; i < grammar.operators.length; i++) {
+                    s += "%" + grammar.operators[i][0] + ' ' + quoteSymbols(grammar.operators[i].slice(1).join(' ')) + "\n";
+                }
+                s += "\n";
+            }
         }
     }
 
@@ -49,8 +51,10 @@ function genBNF (bnf, options) {
     var s = "%%\n",
         sym;
 
-    for (sym in bnf) if (bnf.hasOwnProperty(sym)) {
-        s += ["\n",sym,'\n    : ', genHandles(bnf[sym], options),"\n    ;\n"].join("");
+    for (sym in bnf) {
+        if (bnf.hasOwnProperty(sym)) {
+            s += ["\n",sym,'\n    : ', genHandles(bnf[sym], options), "\n    ;\n"].join("");
+        }
     }
 
     return s;
@@ -61,23 +65,23 @@ function genHandles (handle, options) {
         return handle;
     } else { //array
         var s = "";
-        for (var i=0; i< handle.length;i++) {
+        for (var i = 0; i < handle.length; i++) {
             if (typeof handle[i] === 'string' && handle[i]) {
                 s += quoteSymbols(handle[i]);
             } else if (handle[i] instanceof Array) {
                 s += (handle[i][0] && quoteSymbols(handle[i][0]));
                 if (typeof handle[i][1] === 'string') {
                     if (handle[i][2] && handle[i][2].prec) {
-                        s += " %prec "+handle[i][2].prec;
+                        s += " %prec " + handle[i][2].prec;
                     }
                     if (!options.stripActions) {
-                        s += "\n        {"+handle[i][1]+"}";
+                        s += "\n        {" + handle[i][1] + "}";
                     }
                 } else if (handle[i][1].prec) {
-                    s += " %prec "+handle[i][1].prec;
+                    s += " %prec " + handle[i][1].prec;
                 }
             }
-            if (typeof handle[i+1] !== 'undefined')
+            if (typeof handle[i + 1] !== 'undefined')
                 s += "\n    | ";
         }
         return s;
@@ -96,7 +100,7 @@ function quoteSymbols (rhs) {
 function quoteSymbol (sym) {
     if (!/[a-zA-Z_][a-zA-Z0-9_]*/.test(sym)) {
         var quote = /'/.test(sym) ? '"' : "'";
-        sym = quote + sym+quote;
+        sym = quote + sym + quote;
     }
     return sym;
 }
