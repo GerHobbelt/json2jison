@@ -87,16 +87,16 @@ function genHandles (handle, options) {
 function quoteSymbols (rhs) {
     rhs = rhs.split(' ');
 
-    for (var i=0; i<rhs.length; i++) {
+    for (var i = 0; i < rhs.length; i++) {
         rhs[i] = quoteSymbol(rhs[i]);
     }
     return rhs.join(' ');
 }
 
 function quoteSymbol (sym) {
-    if (!/[a-zA-Z][a-zA-Z0-9_\-]*/.test(sym)) {
+    if (!/[a-zA-Z_][a-zA-Z0-9_]*/.test(sym)) {
         var quote = /'/.test(sym) ? '"' : "'";
-        sym = quote+sym+quote;
+        sym = quote + sym+quote;
     }
     return sym;
 }
@@ -110,7 +110,7 @@ function genLex (lex) {
 
     if ('macros' in lex) {
         for (var macro in lex.macros) {
-            s.push(macro, new Array(indent-macro.length+1).join(' '),lex.macros[macro], '\n');
+            s.push(macro, new Array(indent - macro.length + 1).join(' '), lex.macros[macro], '\n');
         }
     }
     if ('startConditions' in lex) {
@@ -132,10 +132,10 @@ function genLex (lex) {
 
     var longestRule = lex.rules.reduce(function (prev, curr) { return prev > curr[0].length ? prev : curr[0].length; }, 0);
     if ('rules' in lex) {
-        for (var rule;rule=lex.rules.shift();) {
-            if (rule.length > 2) s.push('<'+rule.shift().join(',')+'>');
+        for (var rule; rule = lex.rules.shift(); ) {
+            if (rule.length > 2) s.push('<' + rule.shift().join(',') + '>');
             var reg = genLexRegex(rule[0]);
-            s.push(reg, new Array(longestRule-reg.length+5).join(' '), genLexRule(rule[1]), '\n');
+            s.push(reg, new Array(longestRule-reg.length + 5).join(' '), genLexRule(rule[1]), '\n');
         }
     }
     s.push('\n');
@@ -144,14 +144,14 @@ function genLex (lex) {
 }
 
 function genLexRegex (regex) {
-    var matcher = regex.replace(/^([a-zA-Z0-9]+)$/, "\"$1\"")
+    var matcher = regex.replace(/^([a-zA-Z0-9_]+)$/, "\"$1\"")
                        .replace(/\\([.*+?^${}()|\[\]\/\\])/g, "$1")
                        .replace(/^\$$/, "<<EOF>>")
                        .replace(/^([.*+?^${}()|\[\]\/\\\-;=,><!@#%&]+)$/, "\"$1\"");
     return matcher;
 }
 function genLexRule (rule) {
-    return rule.match(/\n/) ? '%{'+rule+'%}' : rule;
+    return rule.match(/\n/) ? '%{' + rule + '%}' : rule;
 }
 
 exports.convert = json2jison;
