@@ -53,7 +53,7 @@ function genBNF (bnf, options) {
 
     for (sym in bnf) {
         if (bnf.hasOwnProperty(sym)) {
-            s += ["\n",sym,'\n    : ', genHandles(bnf[sym], options), "\n    ;\n"].join("");
+            s += ["\n", sym, '\n    : ', genHandles(bnf[sym], options), "\n    ;\n"].join("");
         }
     }
 
@@ -81,8 +81,9 @@ function genHandles (handle, options) {
                     s += " %prec " + handle[i][1].prec;
                 }
             }
-            if (typeof handle[i + 1] !== 'undefined')
+            if (typeof handle[i + 1] !== 'undefined') {
                 s += "\n    | ";
+            }
         }
         return s;
     }
@@ -121,23 +122,32 @@ function genLex (lex) {
         var ps = [];
         var px = [];
         for (var st in lex.startConditions) {
-            if (lex.startConditions[st])
+            if (lex.startConditions[st]) {
                 px.push(st);
-            else
+            } else {
                 ps.push(st);
+            }
         }
-        if (ps.length) s.push('%s ', ps.join(' '));
-        if (px.length) s.push('%x ', px.join(' '));
+        if (ps.length) {
+            s.push('%s ', ps.join(' '));
+        }
+        if (px.length) {
+            s.push('%x ', px.join(' '));
+        }
     }
     if ('actionInclude' in lex) {
         s.push('\n%{\n', lex.actionInclude, '\n%}\n');
     }
     s.push('\n%%\n');
 
-    var longestRule = lex.rules.reduce(function (prev, curr) { return prev > curr[0].length ? prev : curr[0].length; }, 0);
+    var longestRule = lex.rules.reduce(function (prev, curr) { 
+        return prev > curr[0].length ? prev : curr[0].length; 
+    }, 0);
     if ('rules' in lex) {
         for (var rule; rule = lex.rules.shift(); ) {
-            if (rule.length > 2) s.push('<' + rule.shift().join(',') + '>');
+            if (rule.length > 2) {
+                s.push('<' + rule.shift().join(',') + '>');
+            }
             var reg = genLexRegex(rule[0]);
             s.push(reg, new Array(longestRule-reg.length + 5).join(' '), genLexRule(rule[1]), '\n');
         }
@@ -161,18 +171,21 @@ function genLexRule (rule) {
 exports.convert = json2jison;
 
 exports.main = function main (args) {
-    if(args.length <= 2) return;
+    if (args.length <= 2) {
+        return;
+    }
 
     var raw = fs.readFileSync(path.resolve(args[2]), "utf8");
     var name = path.basename(args[2], '.json');
     var grammar = JSON.parse(raw);
 
     if ('bnf' in grammar || 'lex' in grammar) {
-        fs.writeFileSync(path.resolve(name+".jison"), json2jison(grammar));
+        fs.writeFileSync(path.resolve(name + ".jison"), json2jison(grammar));
     }
 };
 
 
-if (typeof process !== 'undefined' || require.main === module)
+if (typeof process !== 'undefined' || require.main === module) {
     exports.main(process.argv);
+}
 
