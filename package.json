@@ -1,6 +1,6 @@
 {
   "name": "json2jison",
-  "version": "0.0.1-153",
+  "version": "0.0.1-154",
   "description": "Converts json grammar definitions to jison's format",
   "main": "json2jison.js",
   "scripts": {
