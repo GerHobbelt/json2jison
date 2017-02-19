@@ -1,10 +1,10 @@
 {
   "name": "json2jison",
   "version": "0.0.1-171",
-  "description": "Converts json grammar definitions to jison's format",
+  "description": "Converts json grammar definitions to jison's own format",
   "main": "json2jison.js",
   "scripts": {
-    "test": "node tests.js"
+    "test": "make test"
   },
   "keywords": [
     "jison",
@@ -24,8 +24,15 @@
     "url": "http://zaa.ch"
   },
   "license": "MIT",
-  "bin": "json2jison.js",
+  "bin": "./cli.js",
   "engines": {
     "node": ">=4.0"
+  },
+  "dependencies": {
+    "nomnom": "github:GerHobbelt/nomnom#master"
+  },
+  "devDependencies": {
+    "chai": "3.5.0",
+    "mocha": "3.2.0"
   }
 }
