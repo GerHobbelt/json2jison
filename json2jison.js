@@ -1,10 +1,6 @@
-#!/usr/bin/env node
 
 // converts json grammar format to Jison grammar format
-
-var fs = require('fs');
-var path = require('path');
-
+//
 // Supported options:
 // - stripActions
 function json2jison (grammar, options) {
@@ -169,23 +165,4 @@ function genLexRule (rule) {
 }
 
 exports.convert = json2jison;
-
-exports.main = function main (args) {
-    if (args.length <= 2) {
-        return;
-    }
-
-    var raw = fs.readFileSync(path.resolve(args[2]), "utf8");
-    var name = path.basename(args[2], '.json');
-    var grammar = JSON.parse(raw);
-
-    if ('bnf' in grammar || 'lex' in grammar) {
-        fs.writeFileSync(path.resolve(name + ".jison"), json2jison(grammar));
-    }
-};
-
-
-if (typeof process !== 'undefined' || require.main === module) {
-    exports.main(process.argv);
-}
 
