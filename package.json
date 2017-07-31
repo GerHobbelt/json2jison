@@ -16,7 +16,7 @@
   "preferGlobal": true,
   "repository": {
     "type": "git",
-    "url": "git://github.com/zaach/json2jison.git"
+    "url": "git://github.com/GerHobbelt/json2jison.git"
   },
   "author": {
     "name": "Zach Carter",
@@ -33,6 +33,6 @@
   },
   "devDependencies": {
     "chai": "4.1.0",
-    "mocha": "3.4.2"
+    "mocha": "3.5.0"
   }
 }
