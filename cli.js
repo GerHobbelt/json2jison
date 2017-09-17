@@ -37,11 +37,14 @@ var opts = require('@gerhobbelt/nomnom')
 exports.main = function main (opts) {
     if (opts.file) {
         var raw = fs.readFileSync(path.normalize(opts.file), 'utf8');
-	var outpath = (opts.outfile || opts.file);
-    	var name = path.basename(outpath).replace(/\..*$/g, '');
-    	outpath = path.dirname(outpath);
+	      var outpath = (opts.outfile || opts.file);
+    	  var name = path.basename(outpath).replace(/\..*$/g, '');
+    	  outpath = path.dirname(outpath);
 
-        fs.writeFileSync(path.resolve(outpath, name + '.jison'), json2jison.convert(raw));
+        var outfile = path.resolve(outpath, name + '.jison');
+        console.log('RAW:', raw);
+        fs.writeFileSync(outfile, json2jison.convert(raw), 'utf8');
+        console.log(`JISON grammar has been written to file "${outfile}"`);
     } else {
         input(function (raw) {
             console.log(json2jison.convert(raw));
