@@ -32,6 +32,13 @@
     npm install @gerhobbelt/json2jison -g
 
 
+
+## build
+
+To build the parser yourself, follow the install & build directions of the [monorepo](https://github.com/GerHobbelt/jison).
+
+
+
 ## license
 
 MIT
