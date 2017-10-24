@@ -1,4 +1,4 @@
-# json2jison \[SECONDARY SOURCE REPO]
+# json2jison \[OBSOLETED]
 
 
 [![build status](https://secure.travis-ci.org/GerHobbelt/json2jison.png)](http://travis-ci.org/GerHobbelt/json2jison)
@@ -8,13 +8,13 @@
 
 
 > 
-> # deprecation ~ secondary-source notice
+> # deprecation notice
 >
-> From today (2017/oct/15) the json2jison repository is only a **secondary source** 
+> From today (2017/oct/15) the json2jison repository is **obsoleted** 
 > for the `json2jison` package/codebase: the **primary source** is the 
 > [jison](https://github.com/GerHobbelt/jison) 
 > [monorepo](https://medium.com/netscape/the-case-for-monorepos-907c1361708a)'s `packages/json2jison/` 
-> directory.
+> directory. See also https://github.com/GerHobbelt/jison/issues/16.
 >
 > (For a comparable argument, see also ["Why is Babel a monorepo?"](https://github.com/babel/babel/blob/master/doc/design/monorepo.md))
 >
